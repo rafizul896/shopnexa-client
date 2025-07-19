@@ -12,9 +12,15 @@ import {
 import { Input } from "@/components/ui/input";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import Link from "next/link";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { registrationSchema } from "./registerValidation";
+import { registerUser } from "@/services/Auth";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
-  const form = useForm();
+  const form = useForm({
+    resolver: zodResolver(registrationSchema),
+  });
 
   const {
     formState: { isSubmitting },
@@ -22,9 +28,23 @@ export default function RegisterForm() {
 
   const password = form.watch("password");
   const passwordConfirm = form.watch("passwordConfirm");
-  //   console.log(password, passwordConfirm);
 
-  const onSubmit: SubmitHandler<FieldValues> = async (data) => {};
+  const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    try {
+      const res = await registerUser(data);
+      console.log(res)
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        console.log(err);
+        toast.error(err?.message);
+      }
+    }
+  };
 
   return (
     <div className="border-2 border-gray-300 rounded-xl flex-grow max-w-md w-full p-5">
@@ -32,13 +52,13 @@ export default function RegisterForm() {
         {/* <Logo /> */}
         <div>
           <h1 className="text-xl font-semibold">Register</h1>
-          <p className="font-extralight text-sm text-gray-600">
+          <p className="font-extralight text-sm mb-3 text-gray-600">
             Join us today and start your journey!
           </p>
         </div>
       </div>
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)}>
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
           <FormField
             control={form.control}
             name="name"
@@ -98,9 +118,9 @@ export default function RegisterForm() {
           />
 
           <Button
-            disabled={passwordConfirm && password !== passwordConfirm}
+            disabled={!!passwordConfirm && password !== passwordConfirm}
             type="submit"
-            className="mt-5 w-full"
+            className="mt-5 w-full cursor-pointer"
           >
             {isSubmitting ? "Registering...." : "Register"}
           </Button>
