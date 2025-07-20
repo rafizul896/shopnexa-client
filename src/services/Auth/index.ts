@@ -17,3 +17,19 @@ export const registerUser = async (userData: FieldValues) => {
     return Error(err);
   }
 };
+
+export const loginUser = async (userData: FieldValues) => {
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/auth/login`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(userData),
+    });
+
+    return res.json();
+  } catch (err: any) {
+    return Error(err);
+  }
+};
