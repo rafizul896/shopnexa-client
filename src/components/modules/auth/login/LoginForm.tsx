@@ -12,7 +12,7 @@ import { Input } from "@/components/ui/input";
 import { loginUser } from "@/services/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
-import { FieldValues, SubmitErrorHandler, useForm } from "react-hook-form";
+import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 
@@ -25,7 +25,7 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  const onSubmit: SubmitErrorHandler<FieldValues> = async (data) => {
+  const onSubmit = async (data: FieldValues) => {
     try {
       const res = await loginUser(data);
       console.log(res);
