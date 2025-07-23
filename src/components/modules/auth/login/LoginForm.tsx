@@ -15,6 +15,7 @@ import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function LoginForm() {
   const form = useForm({
@@ -24,6 +25,10 @@ export default function LoginForm() {
   const {
     formState: { isSubmitting },
   } = form;
+
+  const handleReCaptcha = (value: string | null) => {
+    console.log(value);
+  };
 
   const onSubmit = async (data: FieldValues) => {
     try {
@@ -81,6 +86,13 @@ export default function LoginForm() {
               </FormItem>
             )}
           />
+
+       <div className="flex justify-center items-center mt-3">
+           <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
+            onChange={handleReCaptcha}
+          />
+       </div>
 
           <Button type="submit" className="mt-5 w-full cursor-pointer">
             {isSubmitting ? "Logging..." : "Login"}
