@@ -9,15 +9,17 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
-import { loginUser } from "@/services/Auth";
+import { loginUser, reCaptchaTokenVerification } from "@/services/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 import { FieldValues, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import ReCAPTCHA from "react-google-recaptcha";
+import { useState } from "react";
 
 export default function LoginForm() {
+  const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
@@ -26,8 +28,17 @@ export default function LoginForm() {
     formState: { isSubmitting },
   } = form;
 
-  const handleReCaptcha = (value: string | null) => {
-    console.log(value);
+  const handleReCaptcha = async (value: string | null) => {
+    try {
+      const res = await reCaptchaTokenVerification(value!);
+
+      if (res?.success) {
+        setReCaptchaStatus(true);
+        console.log(res);
+      }
+    } catch (err) {
+      console.error(err);
+    }
   };
 
   const onSubmit = async (data: FieldValues) => {
@@ -87,14 +98,18 @@ export default function LoginForm() {
             )}
           />
 
-       <div className="flex justify-center items-center mt-3">
-           <ReCAPTCHA
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
-            onChange={handleReCaptcha}
-          />
-       </div>
+          <div className="flex justify-center items-center mt-3">
+            <ReCAPTCHA
+              sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_CLIENT_KEY as string}
+              onChange={handleReCaptcha}
+            />
+          </div>
 
-          <Button type="submit" className="mt-5 w-full cursor-pointer">
+          <Button
+            disabled={reCaptchaStatus ? false : true}
+            type="submit"
+            className="mt-5 w-full cursor-pointer"
+          >
             {isSubmitting ? "Logging..." : "Login"}
           </Button>
         </form>
