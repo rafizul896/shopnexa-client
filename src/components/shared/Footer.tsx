@@ -30,14 +30,14 @@ const Footer = () => {
               alt="Logo"
             />
           </div>
-          <p className="text-gray-600 mt-3 w-1/2">
+          <p className="text-gray-600 mt-3 md:w-1/2">
             Save big this Black Friday with unbeatable deals on tech, home
             essentials, fashion, and more! Limited stock.
           </p>
         </div>
 
         <hr />
-        <ul className="flex justify-center space-x-6 text-sm text-gray-800 font-medium my-4">
+        <ul className="flex flex-wrap justify-center space-x-6 text-sm text-gray-800 font-medium my-4">
           {navLinks.map((link) => (
             <li key={link.href}>
               <Link href={link.href} className="hover:text-purple-600">

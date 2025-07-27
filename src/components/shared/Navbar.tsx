@@ -26,10 +26,10 @@ export default function Navbar() {
 
   return (
     <header className="border-b w-full">
-      <div className="container flex justify-between items-center mx-auto h-16 px-3">
+      <div className="container flex gap-2 justify-between items-center mx-auto h-16 px-3">
         <Image className="w-full max-w-[160px] h-auto" src={Logo} alt="Logo" />
 
-        <div className="max-w-md  flex-grow">
+        <div className="max-w-md flex-grow hidden md:block">
           <input
             type="text"
             placeholder="Search for products"
@@ -37,7 +37,10 @@ export default function Navbar() {
           />
         </div>
         <nav className="flex gap-2">
-          <Button variant="outline" className="rounded-full p-0 size-10">
+          <Button
+            variant="outline"
+            className="rounded-full p-0 size-10 hidden md:block"
+          >
             <Heart />
           </Button>
           <Button variant="outline" className="rounded-full p-0 size-10">

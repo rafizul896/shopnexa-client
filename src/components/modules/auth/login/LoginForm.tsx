@@ -17,9 +17,12 @@ import { toast } from "sonner";
 import { loginSchema } from "./loginValidation";
 import ReCAPTCHA from "react-google-recaptcha";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+
 
 export default function LoginForm() {
   const [reCaptchaStatus, setReCaptchaStatus] = useState(false);
+  const router = useRouter();
   const form = useForm({
     resolver: zodResolver(loginSchema),
   });
@@ -48,6 +51,7 @@ export default function LoginForm() {
 
       if (res?.success) {
         toast.success(res?.message);
+        router.push("/");
       } else {
         toast.error(res?.message);
       }
