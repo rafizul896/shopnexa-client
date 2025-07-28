@@ -58,6 +58,10 @@ const Footer = () => {
             </Link>
           ))}
         </div>
+        {/* Copyright */}
+        <div className="pt-6 text-center text-sm text-gray-500">
+          © {new Date().getFullYear()} Shop Nexa. All rights reserved.
+        </div>
       </div>
     </footer>
   );
