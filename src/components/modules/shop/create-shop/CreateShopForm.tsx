@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import SNImageUploader from "@/components/ui/core/SNImageUploader";
 import {
   Form,
   FormControl,
@@ -192,6 +193,8 @@ export default function CreateShopForm() {
                 )}
               />
             </div>
+
+            <SNImageUploader />
           </div>
 
           <Button type="submit" className="mt-5 w-full">
