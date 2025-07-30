@@ -2,6 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import SNImageUploader from "@/components/ui/core/SNImageUploader";
+import ImagePreviewer from "@/components/ui/core/SNImageUploader/ImagePreviewer";
 import {
   Form,
   FormControl,
@@ -17,6 +18,7 @@ import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 
 export default function CreateShopForm() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
   const form = useForm();
 
@@ -196,8 +198,20 @@ export default function CreateShopForm() {
                 )}
               />
             </div>
-
-            <SNImageUploader imageFiles={imageFiles} setImageFiles={setImageFiles} />
+            {imagePreview?.length > 0 ? (
+              <ImagePreviewer
+                className="mt-5"
+                imagePreview={imagePreview}
+                setImageFiles={setImageFiles}
+                setImagePreview={setImagePreview}
+              />
+            ) : (
+              <SNImageUploader
+                className="mt-5"
+                setImagePreview={setImagePreview}
+                setImageFiles={setImageFiles}
+              />
+            )}
           </div>
 
           <Button type="submit" className="mt-5 w-full">
