@@ -1,12 +1,33 @@
-import React, { useState } from "react";
+import React, { Dispatch, SetStateAction, useState } from "react";
 import { Input } from "../../input";
+import Image from "next/image";
 
-const SNImageUploader = () => {
-  const [imageFiles, setImageFiles] = useState<File[] | []>([]);
+type TImageUploaderProps = {
+  imageFiles: File[] | [];
+  setImageFiles: Dispatch<SetStateAction<[] | File[]>>;
+};
+
+const SNImageUploader = ({
+  imageFiles,
+  setImageFiles,
+}: TImageUploaderProps) => {
+  const [imagePreview, setImagePreview] = useState<string[] | []>([]);
 
   const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files![0];
     setImageFiles((prev) => [...prev, file]);
+
+    if (file) {
+      const reader = new FileReader();
+
+      reader.onloadend = () => {
+        setImagePreview((prev) => [...prev, reader.result as string]);
+      };
+
+      reader.readAsDataURL(file);
+
+      event.target.value = "";
+    }
   };
 
   return (
@@ -25,6 +46,11 @@ const SNImageUploader = () => {
       >
         Upload Logo
       </label>
+      <div>
+        {imagePreview.map((prev, idx) => (
+          <Image src={prev} width={500} height={500} key={idx} alt="Image" />
+        ))}
+      </div>
     </div>
   );
 };
