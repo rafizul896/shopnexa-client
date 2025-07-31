@@ -17,7 +17,7 @@ import { logout } from "@/services/Auth";
 import { useUser } from "@/context/UserContext";
 
 export default function Navbar() {
-  const { user, isLoading, setIsloading } = useUser();
+  const { user, setIsloading } = useUser();
 
   const handleLogOut = () => {
     logout();
@@ -55,10 +55,7 @@ export default function Navbar() {
           ) : (
             <>
               <Link href={"/create-shop"}>
-                <Button
-                  className="rounded-full cursor-pointer"
-                  variant={"outline"}
-                >
+                <Button className="rounded-full cursor-pointer">
                   Create Shop
                 </Button>
               </Link>

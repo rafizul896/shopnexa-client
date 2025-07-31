@@ -13,8 +13,10 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { createShop } from "@/services/Shop";
 import { useState } from "react";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { toast } from "sonner";
 
 export default function CreateShopForm() {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
@@ -27,7 +29,36 @@ export default function CreateShopForm() {
   } = form;
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const servicesOffered = data?.servicesOffered
+      .split(",")
+      .map((service: string) => service.trim())
+      .filter((service: string) => service !== "");
+
+    const modifiedData = {
+      ...data,
+      servicesOffered,
+      establishedYear: Number(data?.establishedYear),
+    };
+
+    try {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(modifiedData));
+      formData.append("logo", imageFiles[0] as File);
+
+      const res = await createShop(formData);
+
+      // console.log(res);
+      if (res?.success) {
+        toast.success(res?.message);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err?.message);
+        console.log(err);
+      }
+    }
   };
 
   return (
@@ -214,7 +245,7 @@ export default function CreateShopForm() {
             )}
           </div>
 
-          <Button type="submit" className="mt-5 w-full">
+          <Button type="submit" disabled={isSubmitting} className="mt-5 w-full cursor-pointer">
             {isSubmitting ? "Creating...." : "Create"}
           </Button>
         </form>
