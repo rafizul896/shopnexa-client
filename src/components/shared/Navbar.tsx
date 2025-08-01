@@ -54,11 +54,13 @@ export default function Navbar() {
             </Link>
           ) : (
             <>
-              <Link href={"/create-shop"}>
-                <Button className="rounded-full cursor-pointer">
-                  Create Shop
-                </Button>
-              </Link>
+              {!user?.hasShop && (
+                <Link href={"/create-shop"}>
+                  <Button className="rounded-full cursor-pointer">
+                    Create Shop
+                  </Button>
+                </Link>
+              )}
 
               <DropdownMenu>
                 <DropdownMenuTrigger>
