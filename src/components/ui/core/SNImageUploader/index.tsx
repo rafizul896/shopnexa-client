@@ -10,7 +10,7 @@ type TImageUploader = {
   setImagePreview: React.Dispatch<React.SetStateAction<string[]>>;
 };
 
-const NMImageUploader = ({
+const SNImageUploader = ({
   label = "Upload Images",
   className,
   setImageFiles,
@@ -54,4 +54,4 @@ const NMImageUploader = ({
   );
 };
 
-export default NMImageUploader;
+export default SNImageUploader;

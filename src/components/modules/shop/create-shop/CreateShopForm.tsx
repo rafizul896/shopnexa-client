@@ -245,7 +245,11 @@ export default function CreateShopForm() {
             )}
           </div>
 
-          <Button type="submit" disabled={isSubmitting} className="mt-5 w-full cursor-pointer">
+          <Button
+            type="submit"
+            disabled={isSubmitting}
+            className="mt-5 w-full cursor-pointer"
+          >
             {isSubmitting ? "Creating...." : "Create"}
           </Button>
         </form>
