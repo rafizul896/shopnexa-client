@@ -14,7 +14,7 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
   const handleDelete = (data: ICategory) => {
     console.log(data);
   };
-  
+
   const columns: ColumnDef<ICategory>[] = [
     {
       accessorKey: "name",
@@ -71,7 +71,9 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
         <CreateCategoryModal />
       </div>
 
-      <SNTable data={categories} columns={columns} />
+      <div className="mt-5">
+        <SNTable data={categories} columns={columns} />
+      </div>
     </div>
   );
 };
