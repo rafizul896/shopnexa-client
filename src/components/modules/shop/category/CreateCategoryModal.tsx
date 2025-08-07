@@ -46,6 +46,8 @@ const CreateCategoryModal = () => {
       if (res?.success) {
         toast.success(res?.message);
         form.reset();
+        setImageFiles([]);
+        setImagePreview([]);
         setIsopen(false);
       } else {
         toast.error(res?.message);
@@ -60,7 +62,9 @@ const CreateCategoryModal = () => {
   return (
     <Dialog open={isOpen} onOpenChange={setIsopen}>
       <DialogTrigger asChild>
-        <Button onClick={() => setIsopen(true)}>Create Category</Button>
+        <Button size="sm" onClick={() => setIsopen(true)}>
+          Create Category
+        </Button>
       </DialogTrigger>
       <DialogContent>
         <DialogHeader>
