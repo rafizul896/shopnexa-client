@@ -5,14 +5,41 @@ import { SNTable } from "@/components/ui/core/SNTable";
 import { ColumnDef } from "@tanstack/react-table";
 import Image from "next/image";
 import { Trash } from "lucide-react";
+import { deleteCategory } from "@/services/Category";
+import { toast } from "sonner";
+import { useState } from "react";
+import DeleteConfirmationModal from "@/components/ui/core/SNModal/DeleteConfirmationModal";
 
 type TCategoriesProps = {
   categories: ICategory[];
 };
 
 const ManageCategories = ({ categories }: TCategoriesProps) => {
-  const handleDelete = (data: ICategory) => {
-    console.log(data);
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [selectedItem, setSelectedItem] = useState<string | null>(null);
+
+  const handleDelete = async (data: ICategory) => {
+    setSelectedId(data?._id);
+    setSelectedItem(data?.name);
+    setModalOpen(true);
+  };
+
+  const handleDeleteConfirm = async () => {
+    try {
+      if (selectedId) {
+        const res = await deleteCategory(selectedId);
+
+        if (res.success) {
+          toast.success(res.message);
+          setModalOpen(false);
+        } else {
+          toast.error(res.message);
+        }
+      }
+    } catch (err: any) {
+      console.error(err?.message);
+    }
   };
 
   const columns: ColumnDef<ICategory>[] = [
@@ -73,6 +100,12 @@ const ManageCategories = ({ categories }: TCategoriesProps) => {
 
       <div className="mt-5">
         <SNTable data={categories} columns={columns} />
+        <DeleteConfirmationModal
+          name={selectedItem}
+          isOpen={isModalOpen}
+          onConfirm={handleDeleteConfirm}
+          onOpenChange={setModalOpen}
+        />
       </div>
     </div>
   );
