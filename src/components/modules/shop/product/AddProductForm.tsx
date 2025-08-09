@@ -24,14 +24,32 @@ import { getAllCategories } from "@/services/Category";
 import { IBrand, ICategory } from "@/types";
 import { Plus } from "lucide-react";
 import React, { useEffect, useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import {
+  FieldValues,
+  SubmitHandler,
+  useFieldArray,
+  useForm,
+} from "react-hook-form";
 
 const AddProductForm = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const [categories, setCategories] = useState<ICategory[] | []>([]);
   const [brands, setBrands] = useState<IBrand[] | []>([]);
-  const form = useForm();
+  const form = useForm({
+    defaultValues: {
+      name: "",
+      description: "",
+      price: "",
+      category: "",
+      brand: "",
+      stock: "",
+      weight: "",
+      availableColors: [{ value: "" }],
+      keyFeatures: [{ value: "" }],
+      specification: [{ key: "", value: "" }],
+    },
+  });
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,6 +68,34 @@ const AddProductForm = () => {
   const {
     formState: { isSubmitting },
   } = form;
+
+  const { append: appendColor, fields: colorFields } = useFieldArray({
+    control: form.control,
+    name: "availableColors",
+  });
+
+  const addColor = () => {
+    appendColor({ value: "" });
+  };
+
+  const { append: appendFeatures, fields: featureFields } = useFieldArray({
+    control: form.control,
+    name: "keyFeatures",
+  });
+
+  const addFeatures = () => {
+    appendFeatures({ value: "" });
+  };
+
+  const { append: appendSpecification, fields: fieldsSpecification } =
+    useFieldArray({
+      control: form.control,
+      name: "specification",
+    });
+
+  const addSpecification = () => {
+    appendSpecification({ key: "", value: "" });
+  };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     console.log(data);
@@ -126,7 +172,7 @@ const AddProductForm = () => {
 
             <FormField
               control={form.control}
-              name="brnad"
+              name="brand"
               render={({ field }) => (
                 <FormItem>
                   <FormLabel>Brand</FormLabel>
@@ -221,28 +267,123 @@ const AddProductForm = () => {
               />
             </div>
           </div>
-
+          {/* availableColors */}
           <div>
             <div className="flex justify-between items-center border-t border-b py-3 my-5">
               <p className="text-primary font-bold text-xl">Available Colors</p>
-              <Button variant="outline" className="size-10" type="button">
+              <Button
+                onClick={addColor}
+                variant="outline"
+                className="size-10"
+                type="button"
+              >
                 <Plus className="text-primary" />
               </Button>
             </div>
 
-            <FormField
-              control={form.control}
-              name={`availableColors`}
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Color</FormLabel>
-                  <FormControl>
-                    <Input {...field} value={field.value || ""} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {colorFields.map((colorField, index) => (
+                <div key={colorField.id}>
+                  <FormField
+                    control={form.control}
+                    name={`availableColors.${index}.value`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Color {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value || ""} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* keyFeatures */}
+          <div>
+            <div className="flex justify-between items-center border-t border-b py-3 my-5">
+              <p className="text-primary font-bold text-xl">Key Features</p>
+              <Button
+                onClick={addFeatures}
+                variant="outline"
+                className="size-10"
+                type="button"
+              >
+                <Plus className="text-primary" />
+              </Button>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+              {featureFields?.map((featureField, index) => (
+                <div key={featureField?.id}>
+                  <FormField
+                    control={form.control}
+                    name={`keyFeatures.${index}.value`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Key Feature {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value || ""} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <div className="flex justify-between items-center border-t border-b py-3 my-5">
+              <p className="text-primary font-bold text-xl">Specification</p>
+              <Button
+                onClick={addSpecification}
+                variant="outline"
+                className="size-10"
+                type="button"
+              >
+                <Plus className="text-primary" />
+              </Button>
+            </div>
+
+            <div>
+              {fieldsSpecification?.map((spec, index) => (
+                <div
+                  key={spec?.id}
+                  className="grid grid-cols-1 gap-4 md:grid-cols-2 my-5"
+                >
+                  <FormField
+                    control={form.control}
+                    name={`specification.${index}.key`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Feature name {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value || ""} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                  <FormField
+                    control={form.control}
+                    name={`specification.${index}.value`}
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Feature Description {index + 1}</FormLabel>
+                        <FormControl>
+                          <Input {...field} value={field.value || ""} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </div>
+              ))}
+            </div>
           </div>
 
           <Button
