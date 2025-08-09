@@ -21,8 +21,10 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { getAllBrands } from "@/services/Brand";
 import { getAllCategories } from "@/services/Category";
+import { addProduct } from "@/services/Product";
 import { IBrand, ICategory } from "@/types";
 import { Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import {
   FieldValues,
@@ -30,12 +32,14 @@ import {
   useFieldArray,
   useForm,
 } from "react-hook-form";
+import { toast } from "sonner";
 
 const AddProductForm = () => {
   const [imageFiles, setImageFiles] = useState<File[] | []>([]);
   const [imagePreview, setImagePreview] = useState<string[] | []>([]);
   const [categories, setCategories] = useState<ICategory[] | []>([]);
   const [brands, setBrands] = useState<IBrand[] | []>([]);
+  const router = useRouter();
   const form = useForm({
     defaultValues: {
       name: "",
@@ -98,7 +102,53 @@ const AddProductForm = () => {
   };
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
-    console.log(data);
+    const availableColors = data?.availableColors.map(
+      (color: { value: string }) => color.value
+    );
+
+    const keyFeatures = data?.keyFeatures.map(
+      (features: { value: string }) => features.value
+    );
+
+    const specification: { [key: string]: string } = {};
+    data?.specification.forEach(
+      (item: { key: string; value: string }) =>
+        (specification[item.key] = item.value)
+    );
+
+    const modifiedData = {
+      ...data,
+      availableColors,
+      keyFeatures,
+      specification,
+      price: parseFloat(data.price),
+      stock: parseInt(data.stock),
+      weight: parseFloat(data.stock),
+    };
+
+    try {
+      const formData = new FormData();
+      formData.append("data", JSON.stringify(modifiedData));
+
+      for (const file of imageFiles) {
+        formData.append("images", file);
+      }
+
+      const res = await addProduct(formData);
+
+      console.log(res);
+      if (res?.success) {
+        toast.success(res?.message);
+        router.push("/user/shop/products");
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err?.message);
+        console.log(err);
+      }
+    }
   };
 
   return (
@@ -134,7 +184,23 @@ const AddProductForm = () => {
                 <FormItem>
                   <FormLabel>Price</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input
+                      {...field}
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+
+                        if (
+                          val === "" ||
+                          (/^\d*\.?\d*$/.test(val) && parseFloat(val) >= 0)
+                        ) {
+                          field.onChange(val);
+                        }
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -152,7 +218,7 @@ const AddProductForm = () => {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Product Category" />
                       </SelectTrigger>
                     </FormControl>
@@ -181,7 +247,7 @@ const AddProductForm = () => {
                     defaultValue={field.value}
                   >
                     <FormControl>
-                      <SelectTrigger>
+                      <SelectTrigger className="w-full">
                         <SelectValue placeholder="Select Product Brand" />
                       </SelectTrigger>
                     </FormControl>
@@ -206,7 +272,23 @@ const AddProductForm = () => {
                 <FormItem>
                   <FormLabel>Stock</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input
+                      {...field}
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+
+                        if (
+                          val === "" ||
+                          (/^\d*\.?\d*$/.test(val) && parseFloat(val) >= 0)
+                        ) {
+                          field.onChange(val);
+                        }
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -220,7 +302,23 @@ const AddProductForm = () => {
                 <FormItem>
                   <FormLabel>Weight</FormLabel>
                   <FormControl>
-                    <Input {...field} value={field.value || ""} />
+                    <Input
+                      {...field}
+                      type="number"
+                      step="0.01"
+                      min="0"
+                      value={field.value || ""}
+                      onChange={(e) => {
+                        const val = e.target.value;
+
+                        if (
+                          val === "" ||
+                          (/^\d*\.?\d*$/.test(val) && parseFloat(val) >= 0)
+                        ) {
+                          field.onChange(val);
+                        }
+                      }}
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
