@@ -1,7 +1,7 @@
 "use client";
 import { Button } from "../ui/button";
 import { Heart, LogOut, ShoppingBag } from "lucide-react";
-import Logo from "../../app/assets/shop-nexa.png";
+import Logo from "@assets/shop-nexa.png";
 import Image from "next/image";
 import Link from "next/link";
 import {
