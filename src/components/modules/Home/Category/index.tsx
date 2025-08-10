@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import CategoryCard from "@/components/ui/core/CategoryCard";
 import { getAllCategories } from "@/services/Category";
 import { ICategory } from "@/types";
-import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 
@@ -28,6 +27,16 @@ const Category = async () => {
           <CategoryCard category={category} key={category?._id} />
         ))}
       </div>
+
+       <Link href={"/products"} className="flex justify-center">
+          <Button
+            size={"lg"}
+            className="rounded-full  md:hidden"
+            variant="outline"
+          >
+            View All
+          </Button>
+        </Link>
     </div>
   );
 };
