@@ -6,11 +6,11 @@ import cupImage from "@/assets/cup-with-headphone.png";
 const HeroSection = () => {
   return (
     <div
-      className={`${styles.banner} container mx-auto border-2 border-white rounded-3xl mt-10`}
+      className={`${styles.banner} container mx-auto border-2 border-white rounded-3xl`}
     >
-      <div className="grid grid-cols-2 gap-4 items-center">
-        <div className="pl-12">
-          <h1 className="text-4xl font-bold leading-normal">
+      <div className="flex flex-col-reverse md:grid grid-cols-2 gap-4 items-center">
+        <div className="md:pl-12 text-center md:text-start">
+          <h1 className="text-xl md:text-4xl font-bold leading-normal">
             Don&apos;t Miss Out on <br /> These Unbeatable Black <br /> Friday
             Deals!
           </h1>
