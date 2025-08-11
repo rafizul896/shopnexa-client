@@ -33,7 +33,7 @@ export default function Navbar() {
   };
 
   return (
-    <header className="border-b w-full">
+    <header className="border-b bg-background w-full sticky top-0 z-10">
       <div className="container flex gap-2 justify-between items-center mx-auto h-16 px-3">
         <Image className="w-full max-w-[160px] h-auto" src={Logo} alt="Logo" />
 
@@ -78,10 +78,12 @@ export default function Navbar() {
                   </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                  <DropdownMenuLabel>My Account</DropdownMenuLabel>
+                <DropdownMenuLabel>My Account</DropdownMenuLabel>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem>Profile</DropdownMenuItem>
-                  <DropdownMenuItem>Dashboard</DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link href={`${user?.role}/dashboard`}>Dashboard</Link>
+                  </DropdownMenuItem>
                   <DropdownMenuItem>My Shop</DropdownMenuItem>
                   <DropdownMenuSeparator />
                   <DropdownMenuItem

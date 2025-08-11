@@ -1,8 +1,7 @@
 import { Button } from "@/components/ui/button";
-import CategoryCard from "@/components/ui/core/CategoryCard";
 import ProductCard from "@/components/ui/core/ProductCard";
 import { getAllProduct } from "@/services/Product";
-import { ICategory, IProduct } from "@/types";
+import {  IProduct } from "@/types";
 import Link from "next/link";
 import React from "react";
 

@@ -6,9 +6,15 @@ import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types";
 import { SNTable } from "@/components/ui/core/SNTable";
+import { useState } from "react";
+import { Checkbox } from "@/components/ui/checkbox";
+import DiscountModal from "./DiscountModal";
 
 const ManageProducts = ({ products }: { products: IProduct[] }) => {
   const router = useRouter();
+  const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
+
+  console.log(selectedIds);
 
   const handleView = (product: IProduct) => {
     console.log("Viewing product:", product);
@@ -19,6 +25,39 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
   };
 
   const columns: ColumnDef<IProduct>[] = [
+    {
+      id: "select",
+      header: ({ table }) => (
+        <Checkbox
+          className="border-gray-400"
+          checked={
+            table.getIsAllPageRowsSelected() ||
+            (table.getIsSomePageRowsSelected() && "indeterminate")
+          }
+          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          aria-label="Select all"
+        />
+      ),
+      cell: ({ row }) => (
+        <Checkbox
+          className="border-gray-300"
+          checked={row.getIsSelected()}
+          onCheckedChange={(value) => {
+            if (value) {
+              setSelectedIds((prev) => [...prev, row.original._id]);
+            } else {
+              setSelectedIds(
+                selectedIds.filter((id) => id !== row.original._id)
+              );
+            }
+            row.toggleSelected(!!value);
+          }}
+          aria-label="Select row"
+        />
+      ),
+      enableSorting: false,
+      enableHiding: false,
+    },
     {
       accessorKey: "name",
       header: "Product Name",
@@ -112,6 +151,8 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
           >
             Add Product <Plus />
           </Button>
+
+          <DiscountModal/>
         </div>
       </div>
       <div className="mt-5">

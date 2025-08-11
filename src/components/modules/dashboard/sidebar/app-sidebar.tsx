@@ -37,7 +37,7 @@ const data = {
     },
     {
       title: "Shop",
-      url: "/user/shop/all-products",
+      url: "/user/shop/products",
       icon: Bot,
       items: [
         {
@@ -54,7 +54,6 @@ const data = {
         },
       ],
     },
-
     {
       title: "Settings",
       url: "#",
