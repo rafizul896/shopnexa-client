@@ -17,15 +17,16 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { toast } from "sonner";
 import { addFlashSale } from "@/services/FlashSale";
 
 type TModelProps = {
   selectedIds: string[];
+  setSelectedIds: Dispatch<SetStateAction<[] | string[]>>;
 };
 
-const DiscountModal = ({ selectedIds }: TModelProps) => {
+const DiscountModal = ({ selectedIds, setSelectedIds }: TModelProps) => {
   const [isOpen, setIsopen] = useState(false);
   const form = useForm();
 
@@ -44,6 +45,7 @@ const DiscountModal = ({ selectedIds }: TModelProps) => {
 
       if (res?.success) {
         toast.success(res?.message);
+        setSelectedIds([]);
         setIsopen(false);
       } else {
         toast.error(res?.message);

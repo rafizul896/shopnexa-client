@@ -161,7 +161,7 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
             Add Product <Plus />
           </Button>
 
-          <DiscountModal selectedIds={selectedIds} />
+          <DiscountModal selectedIds={selectedIds} setSelectedIds={setSelectedIds} />
         </div>
       </div>
       <div className="mt-5">
