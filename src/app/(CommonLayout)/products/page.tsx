@@ -3,10 +3,12 @@ import CommonBanner from "@/components/modules/products/banner";
 import { Button } from "@/components/ui/button";
 import CategoryCard from "@/components/ui/core/CategoryCard";
 import { getAllCategories } from "@/services/Category";
+import { getAllProduct } from "@/services/Product";
 import { ICategory } from "@/types";
 
 const AllProductsPage = async () => {
   const { data: categories } = await getAllCategories();
+  const { data: products } = await getAllProduct();
 
   return (
     <div className="container mx-auto">
@@ -27,7 +29,7 @@ const AllProductsPage = async () => {
           </Button>
         </div>
       </div>
-      
+
       <div className="my-5 grid gap-5 grid-cols-2 md:grid-col-4 lg:grid-cols-6">
         {categories.map((category: ICategory) => (
           <CategoryCard category={category} key={category?._id} />
@@ -35,7 +37,7 @@ const AllProductsPage = async () => {
       </div>
 
       {/* filer and all products */}
-      <AllProducts />
+      <AllProducts products={products} />
     </div>
   );
 };
