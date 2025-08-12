@@ -18,8 +18,14 @@ import {
 } from "@/components/ui/form";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useState } from "react";
+import { toast } from "sonner";
+import { addFlashSale } from "@/services/FlashSale";
 
-const DiscountModal = () => {
+type TModelProps = {
+  selectedIds: string[];
+};
+
+const DiscountModal = ({ selectedIds }: TModelProps) => {
   const [isOpen, setIsopen] = useState(false);
   const form = useForm();
 
@@ -28,17 +34,36 @@ const DiscountModal = () => {
   } = form || {};
 
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
+    const modifiedData = {
+      products: [...selectedIds],
+      discountPercentage: parseFloat(data?.discountPercentage),
+    };
+
     try {
-      console.log(data);
-    } catch (err: any) {
-      console.error(err);
+      const res = await addFlashSale(modifiedData);
+
+      if (res?.success) {
+        toast.success(res?.message);
+        setIsopen(false);
+      } else {
+        toast.error(res?.message);
+      }
+    } catch (err) {
+      if (err instanceof Error) {
+        toast.error(err?.message);
+        console.log(err);
+      }
     }
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={setIsopen}>
       <DialogTrigger asChild>
-        <Button size="sm" onClick={() => setIsopen(true)}>
+        <Button
+          disabled={!selectedIds.length}
+          size="sm"
+          onClick={() => setIsopen(true)}
+        >
           Add Falsh Sale
         </Button>
       </DialogTrigger>

@@ -14,8 +14,6 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
 
-  console.log(selectedIds);
-
   const handleView = (product: IProduct) => {
     console.log("Viewing product:", product);
   };
@@ -34,7 +32,18 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
             table.getIsAllPageRowsSelected() ||
             (table.getIsSomePageRowsSelected() && "indeterminate")
           }
-          onCheckedChange={(value) => table.toggleAllPageRowsSelected(!!value)}
+          onCheckedChange={(value) => {
+            table.toggleAllPageRowsSelected(!!value);
+
+            if (value) {
+              const allIds = table
+                ?.getRowModel()
+                .rows.map((row) => row.original._id);
+              setSelectedIds(allIds);
+            }else{
+              setSelectedIds([])
+            }
+          }}
           aria-label="Select all"
         />
       ),
@@ -152,7 +161,7 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
             Add Product <Plus />
           </Button>
 
-          <DiscountModal/>
+          <DiscountModal selectedIds={selectedIds} />
         </div>
       </div>
       <div className="mt-5">
