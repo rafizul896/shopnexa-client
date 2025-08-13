@@ -4,6 +4,7 @@ import React from "react";
 
 const BrandPage = async () => {
   const { data } = await getAllBrands();
+  
   return (
     <div>
       <ManageBrands brands={data} />
