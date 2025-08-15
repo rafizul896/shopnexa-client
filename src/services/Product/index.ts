@@ -2,10 +2,10 @@
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
 
-export const getAllProduct = async (page?: string) => {
+export const getAllProduct = async (page?: string, limit?: string) => {
   try {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BASE_API}/product?page=${page}`,
+      `${process.env.NEXT_PUBLIC_BASE_API}/product?page=${page}&limit=${limit}`,
       {
         method: "GET",
         next: {
@@ -92,8 +92,8 @@ export const deleteProduct = async (productId: string) => {
       }
     );
 
-    revalidateTag("PRODUCT")
-    return res.json()
+    revalidateTag("PRODUCT");
+    return res.json();
   } catch (err: any) {
     return Error(err);
   }
