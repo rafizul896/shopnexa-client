@@ -3,11 +3,11 @@ import { getAllProduct } from "@/services/Product";
 import React from "react";
 
 const ProductPage = async () => {
-  const { data } = await getAllProduct();
+  const { data, meta } = await getAllProduct();
 
   return (
     <div>
-      <ManageProducts products={data} />
+      <ManageProducts products={data} meta={meta} />
     </div>
   );
 };

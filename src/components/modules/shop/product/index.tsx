@@ -4,14 +4,20 @@ import { Edit, Eye, Plus, Trash } from "lucide-react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
-import { IProduct } from "@/types";
+import { IMeta, IProduct } from "@/types";
 import { SNTable } from "@/components/ui/core/SNTable";
 import { useState } from "react";
 import { Checkbox } from "@/components/ui/checkbox";
 import DiscountModal from "./DiscountModal";
 import TablePagination from "@/components/ui/core/SNTable/TablePagination";
 
-const ManageProducts = ({ products }: { products: IProduct[] }) => {
+const ManageProducts = ({
+  products,
+  meta,
+}: {
+  products: IProduct[];
+  meta: IMeta;
+}) => {
   const router = useRouter();
   const [selectedIds, setSelectedIds] = useState<string[] | []>([]);
 
@@ -170,7 +176,7 @@ const ManageProducts = ({ products }: { products: IProduct[] }) => {
       </div>
       <div className="mt-5">
         <SNTable columns={columns} data={products || []} />
-        <TablePagination />
+        <TablePagination totalPage={meta?.totalPage} />
       </div>
     </div>
   );
