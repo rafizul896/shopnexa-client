@@ -1,5 +1,6 @@
 import { IProduct } from "@/types";
 import { createSlice } from "@reduxjs/toolkit";
+import { RootState } from "../store";
 
 export interface ICartProduct extends IProduct {
   orderQuantity: number;
@@ -57,6 +58,16 @@ const cartSlice = createSlice({
     },
   },
 });
+
+export const subTotalSelector = (state: RootState) => {
+  return state.cart.products.reduce((acc, product: ICartProduct) => {
+    if (product?.offerPrice) {
+      return acc + product.offerPrice * product.orderQuantity;
+    } else {
+      return acc + product.price * product.orderQuantity;
+    }
+  }, 0);
+};
 
 export const {
   addProductInStore,
