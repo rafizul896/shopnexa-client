@@ -1,6 +1,7 @@
 import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
 import CustomerHelpSection from "@/components/modules/cart/CustomerHelpSection";
+import PaymentDetails from "@/components/modules/cart/PaymentDetails";
 import CommonBanner from "@/components/modules/products/banner";
 
 const CartPage = () => {
@@ -11,6 +12,7 @@ const CartPage = () => {
       <div className="space-y-5 md:grid grid-cols-12 gap-8 my-5">
         <CartProducts />
         <Coupon />
+        <PaymentDetails />
       </div>
 
       {/* Customer Help Section */}
