@@ -17,11 +17,17 @@ import { logout } from "@/services/Auth";
 import { useUser } from "@/context/UserContext";
 import { usePathname, useRouter } from "next/navigation";
 import { protedRoutes } from "@/constants";
+import { useAppSelector } from "@/redux/hooks";
 
 export default function Navbar() {
   const pathName = usePathname();
   const router = useRouter();
   const { user, setIsloading } = useUser();
+  const cartItems = useAppSelector((store) => store.cart.products);
+  const totalQuantity = cartItems.reduce(
+    (total, item) => total + item.orderQuantity,
+    0
+  );
 
   const handleLogOut = () => {
     logout();
@@ -52,8 +58,17 @@ export default function Navbar() {
             <Heart />
           </Button>
           <Link href={"/cart"}>
-            <Button variant="outline" className="rounded-full p-0 size-10">
+            <Button
+              variant="outline"
+              className="rounded-full p-0 size-10 relative"
+            >
               <ShoppingBag />
+
+              {totalQuantity > 0 && (
+                <p className="bg-[#9352ff] p-1 rounded-full text-white -right-1 -top-2 absolute text-[12px]">
+                  {totalQuantity}
+                </p>
+              )}
             </Button>
           </Link>
           {!user ? (

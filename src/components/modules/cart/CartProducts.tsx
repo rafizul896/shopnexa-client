@@ -1,9 +1,9 @@
 "use client";
 import Image from "next/image";
 import emptyCart from "@/assets/empty-cart.png";
-import { IProduct } from "@/types";
 import CartProductCard from "./CartProductCard";
 import { useAppSelector } from "@/redux/hooks";
+import { ICartProduct } from "@/redux/features/cartSlice";
 
 export default function CartProducts() {
   const products = useAppSelector((store) => store.cart.products);
@@ -22,7 +22,7 @@ export default function CartProducts() {
           </div>
         </div>
       )}
-      {products?.map((product: IProduct) => (
+      {products?.map((product: ICartProduct) => (
         <CartProductCard key={product._id} product={product} />
       ))}
     </div>
