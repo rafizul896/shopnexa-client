@@ -59,6 +59,8 @@ const cartSlice = createSlice({
     },
     clearCartProducts: (state) => {
       state.products = [];
+      state.city = "";
+      state.shippingAddress = "";
     },
     updateCity: (state, action) => {
       state.city = action.payload;
@@ -94,6 +96,7 @@ export const orderConfirmSelector = (state: RootState) => {
   return {
     products: state.cart.products.map((product) => ({
       product: product._id,
+      color: "white",
       quantity: product.orderQuantity,
     })),
     shippingAddress: `${state.cart.shippingAddress} - ${state.cart.city}`,
