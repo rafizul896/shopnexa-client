@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
   citySelector,
   orderConfirmSelector,
@@ -9,6 +10,7 @@ import {
   subTotalSelector,
 } from "@/redux/features/cartSlice";
 import { useAppSelector } from "@/redux/hooks";
+import { toast } from "sonner";
 
 export default function PaymentDetails() {
   const subTotal = useAppSelector(subTotalSelector);
@@ -18,9 +20,25 @@ export default function PaymentDetails() {
   const city = useAppSelector(citySelector);
   const shippingAddress = useAppSelector(shippingAddressSelector);
 
-  console.log(city && shippingAddress ? true : false);
-  const handleOrder = () => {
-    console.log(orderInfo);
+  const handleOrder = async () => {
+    const orderLoading = toast.loading("Order is being placed");
+    try {
+      if (!subTotal) {
+        throw new Error("Your cart is empty..!");
+      }
+
+      if (!city) {
+        throw new Error("City is missing..!");
+      }
+
+      if (!shippingAddress) {
+        throw new Error("Shipping address is missing..!");
+      }
+
+      toast.success("Success")
+    } catch (err: any) {
+      toast.error(err?.message, { id: orderLoading });
+    }
   };
 
   return (
@@ -29,23 +47,22 @@ export default function PaymentDetails() {
       <div className="space-y-2 mt-4">
         <div className="flex justify-between">
           <p className="text-gray-500 ">Subtotal</p>
-          <p className="font-semibold">{subTotal}</p>
+          <p className="font-semibold">{currencyFormatter(subTotal)}</p>
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Discount</p>
-          <p className="font-semibold">{0}</p>
+          <p className="font-semibold">{currencyFormatter(0)}</p>
         </div>
         <div className="flex justify-between">
           <p className="text-gray-500 ">Shipment Cost</p>
-          <p className="font-semibold">{shippingConst}</p>
+          <p className="font-semibold">{currencyFormatter(shippingConst)}</p>
         </div>
       </div>
       <div className="flex justify-between mt-10 mb-5">
         <p className="text-gray-500 ">Grand Total</p>
-        <p className="font-semibold">{grandTotal}</p>
+        <p className="font-semibold">{currencyFormatter(grandTotal)}</p>
       </div>
       <Button
-        disabled={city && shippingAddress ? false : true}
         onClick={handleOrder}
         className="w-full text-xl font-semibold py-5"
       >
