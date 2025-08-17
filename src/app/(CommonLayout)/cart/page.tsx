@@ -1,3 +1,4 @@
+import AddressSection from "@/components/modules/cart/AddressSection";
 import CartProducts from "@/components/modules/cart/CartProducts";
 import Coupon from "@/components/modules/cart/Coupon";
 import CustomerHelpSection from "@/components/modules/cart/CustomerHelpSection";
@@ -12,6 +13,7 @@ const CartPage = () => {
       <div className="space-y-5 md:grid grid-cols-12 gap-8 my-5">
         <CartProducts />
         <Coupon />
+        <AddressSection />
         <PaymentDetails />
       </div>
 
