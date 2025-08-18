@@ -1,6 +1,8 @@
 "use server";
+import { isTokenExpired } from "@/lib/verifyToken";
 import { revalidateTag } from "next/cache";
 import { cookies } from "next/headers";
+import { getNewAccessToken } from "../Auth";
 
 export const getAllBrands = async () => {
   try {
@@ -17,12 +19,21 @@ export const getAllBrands = async () => {
 };
 
 export const createBrand = async (brandData: FormData): Promise<any> => {
+  const cookieStore = await cookies();
+  let token = cookieStore.get("accessToken")!.value;
+
+  if (!token || (await isTokenExpired(token))) {
+    const { data } = await getNewAccessToken();
+    token = data?.accessToken;
+    cookieStore.set("accessToken",token)
+  }
+
   try {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/brand`, {
       method: "POST",
       body: brandData,
       headers: {
-        Authorization: (await cookies()).get("accessToken")!.value,
+        Authorization: token,
       },
     });
     revalidateTag("Brands");

@@ -28,8 +28,8 @@ export function NavUser() {
   const pathname = usePathname();
 
   const handleLogout = () => {
-    logout();
     setIsloading(true);
+    logout();
 
     if (protedRoutes.some((route) => pathname.match(route))) {
       router.push("/");
