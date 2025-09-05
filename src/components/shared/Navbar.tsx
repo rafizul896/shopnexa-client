@@ -73,7 +73,7 @@ export default function Navbar() {
           </Link>
           {!user ? (
             <Link href={"/login"}>
-              <Button className="rounded-full cursor-pointer" variant="outline">
+              <Button className="rounded-full cursor-pointer" >
                 Login
               </Button>
             </Link>

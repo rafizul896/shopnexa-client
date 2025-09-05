@@ -6,7 +6,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useState } from "react";
 
 const FilterSidebar = () => {
-  const [price, setPrice] = useState(50);
+  const [price, setPrice] = useState(500);
 
   const productTypes = [
     "Laptop & Accessories",
@@ -16,7 +16,6 @@ const FilterSidebar = () => {
     "Camera",
     "Video Recording",
     "Tablet",
-    "Table Lights",
   ];
 
   const brands = ["HP", "Apple", "Dell", "Asus", "Canon"];
@@ -29,11 +28,13 @@ const FilterSidebar = () => {
         <h2 className="text-lg font-semibold mb-4">Filter By Price</h2>
         <div className="flex gap-2 mb-2">
           <input
+          defaultValue={0}
             type="text"
             placeholder="Min"
             className="border rounded px-2 py-1 w-full"
           />
           <input
+          defaultValue={price}
             type="text"
             placeholder="Max"
             className="border rounded px-2 py-1 w-full"
