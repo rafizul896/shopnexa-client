@@ -41,7 +41,13 @@ export default function Navbar() {
   return (
     <header className="border-b bg-background w-full sticky top-0 z-10">
       <div className="container flex gap-2 justify-between items-center mx-auto h-16 px-3">
-        <Image className="w-full max-w-[160px] h-auto" src={Logo} alt="Logo" />
+        <Link href={"/"}>
+          <Image
+            className="w-full max-w-[160px] h-auto"
+            src={Logo}
+            alt="Logo"
+          />
+        </Link>
 
         <div className="max-w-md flex-grow hidden md:block">
           <input
@@ -73,9 +79,7 @@ export default function Navbar() {
           </Link>
           {!user ? (
             <Link href={"/login"}>
-              <Button className="rounded-full cursor-pointer" >
-                Login
-              </Button>
+              <Button className="rounded-full cursor-pointer">Login</Button>
             </Link>
           ) : (
             <>

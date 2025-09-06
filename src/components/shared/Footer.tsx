@@ -24,11 +24,13 @@ const Footer = () => {
       <div className="max-w-6xl mx-auto px-4 text-center">
         <div className="flex flex-col items-center mb-6">
           <div className="flex items-center space-x-2">
-            <Image
-              className="w-full max-w-[160px] h-auto"
-              src={Logo}
-              alt="Logo"
-            />
+            <Link href={"/"}>
+              <Image
+                className="w-full max-w-[160px] h-auto"
+                src={Logo}
+                alt="Logo"
+              />
+            </Link>
           </div>
           <p className="text-gray-600 mt-3 md:w-1/2">
             Save big this Black Friday with unbeatable deals on tech, home

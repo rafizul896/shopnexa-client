@@ -25,15 +25,25 @@ const TopBrands = async () => {
       </div>
       <div className="grid grid-cols-2 md:grid-cols-4 gap-6 my-10 ">
         {brands?.slice(0, 4)?.map((brand: IBrand, idx: number) => (
-          <div className="bg-white p-3 rounded-xl" key={idx}>
-            <div className="bg-gray-100 p-2 rounded-xl h-20 w-full">
+          <div
+            key={brand._id}
+            className="group bg-white rounded-xl p-4 shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer border border-gray-100"
+          >
+            <div className="h-20 w-full mb-3 flex items-center justify-center">
               <Image
                 src={brand?.logo}
                 width={50}
                 height={50}
                 alt="category icon"
-                className="mx-auto h-full w-full object-contain"
+                className="max-h-14 max-w-14 object-contain transition-transform duration-300 group-hover:scale-110"
               />
+            </div>
+
+            {/* Brand Name */}
+            <div className="text-center">
+              <h3 className="text-base font-medium text-gray-800 truncate group-hover:text-primary transition-colors duration-300">
+                {brand?.name}
+              </h3>
             </div>
           </div>
         ))}
