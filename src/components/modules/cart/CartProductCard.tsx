@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import DeleteConfirmationModal from "@/components/ui/core/SNModal/DeleteConfirmationModal";
 import { currencyFormatter } from "@/lib/currencyFormatter";
 import {
   decrementOrderQuantity,
@@ -9,6 +10,7 @@ import {
 import { useAppDispatch } from "@/redux/hooks";
 import { Minus, Plus, Trash } from "lucide-react";
 import Image from "next/image";
+import { useState } from "react";
 
 export default function CartProductCard({
   product,
@@ -16,6 +18,15 @@ export default function CartProductCard({
   product: ICartProduct;
 }) {
   const dispatch = useAppDispatch();
+  const [isModalOpen, setModalOpen] = useState(false);
+  const [selectedId, setSelectedId] = useState<string>("");
+  const [selectedItem, setSelectedItem] = useState<string>("");
+
+  const handleDelete = (product: ICartProduct) => {
+    setSelectedId(product?._id);
+    setSelectedItem(product?.name);
+    setModalOpen(true);
+  };
 
   const handleIncrement = (id: string) => {
     dispatch(incrementOrderQuantity(id));
@@ -81,8 +92,9 @@ export default function CartProductCard({
             >
               <Plus />
             </Button>
+
             <Button
-              onClick={() => handleRemove(product?._id)}
+              onClick={() => handleDelete(product)}
               variant="outline"
               className="size-8 rounded-sm"
             >
@@ -91,6 +103,12 @@ export default function CartProductCard({
           </div>
         </div>
       </div>
+      <DeleteConfirmationModal
+        name={selectedItem}
+        isOpen={isModalOpen}
+        onOpenChange={setModalOpen}
+        onConfirm={() => handleRemove(selectedId)}
+      />
     </div>
   );
 }
