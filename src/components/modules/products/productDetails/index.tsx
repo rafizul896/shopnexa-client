@@ -1,23 +1,27 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import { IProduct } from "@/types";
 import { Star } from "lucide-react";
 import Image from "next/image";
-import React from "react";
+import React, { useState } from "react";
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
+  const [imageIdx, setImgeIdx] = useState(0);
+
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-3xl">
       <div className="my-5 rounded-md">
         <Image
-          src={product?.imageUrls[0]}
+          src={product?.imageUrls[imageIdx]}
           width={500}
           height={500}
           alt={`Product Image`}
           className="rounded-md w-full object-cover"
         />
         <div className="grid grid-cols-3 gap-5 mt-3 rounded-sm">
-          {product?.imageUrls?.map((image: string) => (
+          {product?.imageUrls?.map((image: string, idx) => (
             <Image
+              onClick={() => setImgeIdx(idx)}
               key={product._id}
               src={image}
               width={500}
