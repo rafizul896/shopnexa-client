@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button";
 import styles from "./HeroSection.module.css";
 import Image from "next/image";
 import cupImage from "@/assets/cup-with-headphone.png";
+import Link from "next/link";
 
 const HeroSection = () => {
   return (
@@ -20,9 +21,11 @@ const HeroSection = () => {
           </p>
 
           <Button className="rounded-full mr-2">Buy Now</Button>
+          <Link href={"/products"}>
           <Button className="rounded-full" variant="outline">
             All Products
           </Button>
+          </Link>
         </div>
         <div className="flex items-center justify-center">
           <Image src={cupImage} alt="cup image" />
