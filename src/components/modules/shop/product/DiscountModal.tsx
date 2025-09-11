@@ -13,7 +13,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
@@ -71,7 +70,7 @@ const DiscountModal = ({ selectedIds, setSelectedIds }: TModelProps) => {
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle className="text-start">Add Falsh Sale</DialogTitle>
+          <DialogTitle className="text-start">Discount Percentage</DialogTitle>
         </DialogHeader>
 
         <Form {...form}>
@@ -81,7 +80,6 @@ const DiscountModal = ({ selectedIds, setSelectedIds }: TModelProps) => {
               name="discountPercentage"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Discount Percentage</FormLabel>
                   <FormControl>
                     <Input
                       type="number"
