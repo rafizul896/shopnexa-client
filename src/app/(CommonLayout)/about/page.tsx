@@ -94,7 +94,7 @@ const AboutPage = () => {
 
       {/* Story Section */}
       <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12 items-center">
+        <div className="max-w-7xl mx-auto grid md:grid-cols-2 gap-12 items-center">
           <div className="space-y-6">
             <h2 className="text-4xl font-bold">Our Journey</h2>
             <p className="text-lg text-muted-foreground leading-relaxed">
@@ -134,7 +134,7 @@ const AboutPage = () => {
 
       {/* Values Section */}
       <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Why Choose Us</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
@@ -163,7 +163,7 @@ const AboutPage = () => {
 
       {/* Team Section */}
       <section className="py-20 px-4">
-        <div className="max-w-6xl mx-auto">
+        <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold mb-4">Meet Our Team</h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
