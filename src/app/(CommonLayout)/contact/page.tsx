@@ -246,7 +246,7 @@ export default function ContactPage() {
                     />
                   </div>
 
-                  <div className="flex items-center justify-between">
+                  <div className="flex flex-col gap-5 md:flex-row items-center justify-between">
                     <p className="text-sm text-gray-500">* Required fields</p>
                     <button
                       type="submit"

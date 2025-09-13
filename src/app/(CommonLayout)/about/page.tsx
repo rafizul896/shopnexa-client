@@ -1,6 +1,8 @@
 import React from "react";
 import { Star, Award, Truck, Shield, Heart } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const AboutPage = () => {
   const stats = [
@@ -219,12 +221,14 @@ const AboutPage = () => {
             you.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="border border-border text-foreground px-6 py-3 rounded-lg font-medium hover:bg-muted transition-colors">
-              Contact Support
-            </button>
-            <button className="border border-border text-foreground px-6 py-3 rounded-lg font-medium hover:bg-muted transition-colors">
-              Visit Our Store
-            </button>
+            <Link href={"/contact"}>
+              <button className="cursor-pointer border border-border text-foreground px-6 py-2 rounded-lg font-medium hover:bg-muted transition-colors">
+                Contact Support
+              </button>
+            </Link>
+            <Link href={"/products"}>
+              <Button size={"lg"} variant={"default"}>Visit Our Store</Button>
+            </Link>
           </div>
         </div>
       </section>
