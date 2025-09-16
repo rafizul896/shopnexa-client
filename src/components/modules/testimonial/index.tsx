@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import { Star, Quote, ChevronLeft, ChevronRight, Play } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 
 const TestimonialsUi = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
@@ -363,20 +365,23 @@ const TestimonialsUi = () => {
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 bg-gradient-to-r from-purple-600 via-blue-600 to-indigo-700 text-white">
+      <section className="py-20 bg-gray-100">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl sm:text-4xl font-bold mb-6">
             Ready to Join Thousands of Happy Customers?
           </h2>
-          <p className="text-xl text-blue-100 mb-8 max-w-2xl mx-auto">
+          <p className="text-xl mb-8 max-w-2xl mx-auto">
             Experience the quality and service that our customers rave about.
             Start shopping today!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button className="bg-white text-purple-600 font-semibold py-4 px-8 rounded-full hover:bg-gray-100 transform hover:scale-105 transition-all duration-200 shadow-xl">
-              Shop Now
-            </button>
-            <button className="border-2 border-white text-white font-semibold py-4 px-8 rounded-full hover:bg-white hover:text-purple-600 transform hover:scale-105 transition-all duration-200">
+            <Link href={"/products"}>
+              <Button size={"lg"} variant={"default"}>
+                Shop Now
+              </Button>
+            </Link>
+
+            <button className="cursor-pointer border border-border text-foreground px-6 py-2 rounded-lg font-medium hover:bg-muted transition-colors">
               Leave a Review
             </button>
           </div>
