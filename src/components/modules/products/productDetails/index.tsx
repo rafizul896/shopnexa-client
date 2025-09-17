@@ -1,12 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { addProductInStore } from "@/redux/features/cartSlice";
+import { useAppDispatch } from "@/redux/hooks";
 import { IProduct } from "@/types";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import React, { useState } from "react";
+import { toast } from "sonner";
 
 const ProductDetails = ({ product }: { product: IProduct }) => {
   const [imageIdx, setImgeIdx] = useState(0);
+  const dispatch = useAppDispatch();
+
+  const handleAddProduct = (product: IProduct) => {
+    dispatch(addProductInStore(product));
+    toast.success('Product added to Cart')
+  };
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 rounded-3xl">
@@ -69,7 +78,11 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
         </p>
         <hr />
 
-        <Button variant="outline" className="w-full my-5">
+        <Button
+          onClick={() => handleAddProduct(product)}
+          variant="outline"
+          className="w-full my-5"
+        >
           Add To Cart
         </Button>
         <Button className="w-full">Buy Now</Button>
