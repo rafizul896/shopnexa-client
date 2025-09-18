@@ -48,7 +48,7 @@ export default function PaymentDetails() {
       }
 
       const res = await createOrder(orderInfo);
-      console.log(res);
+    
       if (res.success) {
         toast.success(res?.message, { id: orderLoading });
         dispatch(clearCartProducts());

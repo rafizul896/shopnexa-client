@@ -14,7 +14,7 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
   const handleAddProduct = (product: IProduct) => {
     dispatch(addProductInStore(product));
-    toast.success('Product added to Cart')
+    toast.success("Product added to Cart");
   };
 
   return (
@@ -80,12 +80,10 @@ const ProductDetails = ({ product }: { product: IProduct }) => {
 
         <Button
           onClick={() => handleAddProduct(product)}
-          variant="outline"
           className="w-full my-5"
         >
           Add To Cart
         </Button>
-        <Button className="w-full">Buy Now</Button>
       </div>
     </div>
   );
