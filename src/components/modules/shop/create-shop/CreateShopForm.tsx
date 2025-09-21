@@ -47,7 +47,6 @@ export default function CreateShopForm() {
 
       const res = await createShop(formData);
 
-      // console.log(res);
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -56,7 +55,6 @@ export default function CreateShopForm() {
     } catch (err) {
       if (err instanceof Error) {
         toast.error(err?.message);
-        console.log(err);
       }
     }
   };

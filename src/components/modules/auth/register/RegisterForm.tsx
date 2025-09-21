@@ -19,7 +19,7 @@ import { toast } from "sonner";
 import { useUser } from "@/context/UserContext";
 
 export default function RegisterForm() {
-  const {setIsloading} = useUser();
+  const { setIsloading } = useUser();
   const form = useForm({
     resolver: zodResolver(registrationSchema),
   });
@@ -34,7 +34,7 @@ export default function RegisterForm() {
   const onSubmit: SubmitHandler<FieldValues> = async (data) => {
     try {
       const res = await registerUser(data);
-      setIsloading(true)
+      setIsloading(true);
       if (res?.success) {
         toast.success(res?.message);
       } else {
@@ -42,7 +42,6 @@ export default function RegisterForm() {
       }
     } catch (err) {
       if (err instanceof Error) {
-        console.log(err);
         toast.error(err?.message);
       }
     }

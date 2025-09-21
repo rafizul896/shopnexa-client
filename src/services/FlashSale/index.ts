@@ -7,7 +7,6 @@ export const addFlashSale = async (productData: any): Promise<any> => {
     const token = await getValidToken();
 
   try {
-    console.log(productData);
     const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_API}/flash-sale`, {
       method: "POST",
       headers: {

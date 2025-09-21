@@ -23,20 +23,20 @@ const Category = async () => {
       </div>
 
       <div className="my-5 grid gap-5 grid-cols-2 md:grid-col-4 lg:grid-cols-6">
-        {Array(12).fill(categories[0]).map((category: ICategory) => (
+        {categories?.map((category: ICategory) => (
           <CategoryCard category={category} key={category?._id} />
         ))}
       </div>
 
-       <Link href={"/products"} className="flex justify-center">
-          <Button
-            size={"lg"}
-            className="rounded-full  md:hidden"
-            variant="outline"
-          >
-            View All
-          </Button>
-        </Link>
+      <Link href={"/products"} className="flex justify-center">
+        <Button
+          size={"lg"}
+          className="rounded-full  md:hidden"
+          variant="outline"
+        >
+          View All
+        </Button>
+      </Link>
     </div>
   );
 };
