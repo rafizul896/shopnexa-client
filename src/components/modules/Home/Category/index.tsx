@@ -3,7 +3,6 @@ import CategoryCard from "@/components/ui/core/CategoryCard";
 import { getAllCategories } from "@/services/Category";
 import { ICategory } from "@/types";
 import Link from "next/link";
-import React from "react";
 
 const Category = async () => {
   const { data: categories } = await getAllCategories();

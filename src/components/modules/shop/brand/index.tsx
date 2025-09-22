@@ -95,6 +95,7 @@ const ManageBrands = ({ brands }: { brands: IBrand[] }) => {
       </div>
       <div className="mt-5">
         <SNTable columns={columns} data={brands || []} />
+        
         <DeleteConfirmationModal
           name={selectedItem}
           isOpen={isModalOpen}

@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import { createBrand } from "@/services/Brand";
 import ImagePreviewer from "@/components/ui/core/SNImageUploader/ImagePreviewer";
 import SNImageUploader from "@/components/ui/core/SNImageUploader";
+import { Loader2 } from "lucide-react";
 
 const CreateBrandModal = () => {
   const [isOpen, setIsopen] = useState(false);
@@ -61,7 +62,7 @@ const CreateBrandModal = () => {
           Create Brand
         </Button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[430px]">
         <DialogHeader>
           <DialogTitle className="text-start">Create Product Brand</DialogTitle>
         </DialogHeader>
@@ -102,8 +103,13 @@ const CreateBrandModal = () => {
               )}
             />
 
-            <Button type="submit" className="w-full rounded-sm">
-              {isSubmitting ? "Creating...." : "Create"}
+            <Button
+              type="submit"
+              className="w-full rounded-sm flex items-center justify-center gap-2"
+              disabled={isSubmitting}
+            >
+              {isSubmitting && <Loader2 className="h-4 w-4 animate-spin" />}
+              {isSubmitting ? "Creating..." : "Create"}
             </Button>
           </form>
         </Form>
